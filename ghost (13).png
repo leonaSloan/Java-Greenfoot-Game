@@ -1,0 +1,90 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
+
+
+
+public class ghost extends Actor
+    {
+    
+    
+    int score = 0;
+    GreenfootImage img = new GreenfootImage("ghost.png");
+    boolean isFlipped = false;
+    int power = 3;
+    int fireTime = 0;
+        
+    public ghost()
+    {
+        img.scale(100, 100);
+        setImage(img);
+        setLocation(600, 650);
+    }
+
+         public void act()
+     
+     {
+        MyWorld gameW = (MyWorld) getWorld();
+        int xCurr = getX();
+        int yCurr = getY();
+    
+         
+         if(Greenfoot.isKeyDown("W") && getY() > 290) 
+     
+        {
+           this.setLocation(getX(), getY()-1); 
+        }
+        
+          if(Greenfoot.isKeyDown("D"))
+        {
+           this.setLocation(getX()+1, getY());  
+        } 
+        
+        if(Greenfoot.isKeyDown("A")) 
+        { 
+            this.setLocation(getX()-1, getY()); 
+        }
+        
+         if(Greenfoot.isKeyDown("D") && isFlipped==false) 
+        {  
+            isFlipped = true;
+            img.mirrorHorizontally();
+        }
+        
+        if(Greenfoot.isKeyDown("A") && isFlipped==true) 
+        { 
+            isFlipped = false;
+            img.mirrorHorizontally();
+        }
+        
+        if (Greenfoot.isKeyDown("S") && yCurr < 760) {
+            this.setLocation(getX(), getY()+power);
+        }
+        
+             if (fireTime > 0) {
+            fireTime--;
+        }
+        
+       if (Greenfoot.isKeyDown("B") && fireTime == 0) {
+        fireTime = 60;
+        gameW.addObject(new projectile(), getX(), getY());
+        }
+        
+        Actor npc = getOneIntersectingObject(npc.class);
+        if (npc != null)
+        {
+            gameW.playerScore += 10;
+            gameW.removeObject(npc);
+        }   
+    
+        Actor npc2 = getOneIntersectingObject(blowFish.class);
+        if(npc2 != null){
+           gameW.removeObject(npc2);
+           gameW.playerLives = gameW.playerLives - 1;
+           return; 
+        }
+        
+        
+        
+        }
+}
+

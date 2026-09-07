@@ -1,0 +1,37 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
+public class projectile extends Actor
+{
+    int speed = 10;
+    
+    public projectile(){
+         GreenfootImage bk = new GreenfootImage("floss.png");
+         setImage(bk);
+         bk.scale(43,41);
+    }
+    
+    public void act()
+    {
+        int xCurr = getX();
+        int yCurr = getY();
+        
+        this.setLocation(getX(), getY()-speed);
+        
+        Actor npc = getOneIntersectingObject(blowFish.class);
+        if(npc != null){
+           MyWorld gameW = (MyWorld) getWorld();
+           gameW.removeObject(npc);
+           gameW.removeObject(this);
+           gameW.playerScore = gameW.playerScore + 5;
+           return; 
+        }
+        
+        
+        if(yCurr < 10){
+            MyWorld gameW = (MyWorld) getWorld();
+            gameW.playerScore -= 2;
+            gameW.removeObject(this);
+            return; 
+        }
+    }
+}

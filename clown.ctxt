@@ -1,0 +1,29 @@
+import greenfoot.*; 
+ 
+public class blowFish extends Actor
+{
+    int power = 2;
+    
+     public blowFish(){
+      GreenfootImage bk = new GreenfootImage("blowfish.png");
+      setImage(bk);
+      bk.scale(99,100);  
+    }
+    
+    public void act()
+        {
+        int newX = this.getX() +1;
+        int newY = this.getY();
+        setLocation(newX, newY);
+
+        if (isAtEdge()) 
+            {
+    
+            MyWorld gameW = (MyWorld) getWorld(); 
+            gameW.playerLives -= 1; 
+    
+            getWorld().removeObject(this); 
+            return;
+        }
+    }
+}
